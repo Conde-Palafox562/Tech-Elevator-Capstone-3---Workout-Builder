@@ -6,6 +6,9 @@ DROP TABLE IF EXISTS exercise;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS trainer;
 
+
+
+
 CREATE TABLE trainer (
 	trainer_id SERIAL NOT NULL,
 	trainer_name varchar (100) NOT NULL,
