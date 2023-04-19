@@ -80,4 +80,6 @@ export default {
 label {
   margin-right: 0.5rem;
 }
+
+
 </style>
