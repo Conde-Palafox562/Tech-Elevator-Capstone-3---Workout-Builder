@@ -33,10 +33,10 @@ public class JdbcTrainerDao implements TrainerDao {
     }
 
     public boolean assignToUser(int user_id, Trainer trainer) {
-        String sql = "INSERT into user(trainer_id) VALUES (?) RETURNING assignment_id";
+        String sql = "UPDATE users SET trainer_id =? WHERE user_id = ?";
         Integer newId;
         try {
-            newId = jdbcTemplate.queryForObject(sql, Integer.class, user_id, trainer.getTrainer_id());
+            newId = jdbcTemplate.update(sql, trainer.getTrainer_id(), user_id);
         } catch (DataAccessException e) {
             return false;
         }
@@ -46,6 +46,7 @@ public class JdbcTrainerDao implements TrainerDao {
     private Trainer mapRowToTrainer(SqlRowSet rs) {
         Trainer trainer = new Trainer();
         trainer.setTrainer_id(rs.getInt("trainer_id"));
+        trainer.setTrainer_name(rs.getString("trainer_name"));
         return trainer;
     }
 }

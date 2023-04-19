@@ -26,6 +26,7 @@ CREATE TABLE users (
 	username varchar(50) NOT NULL UNIQUE,
 	password_hash varchar(200) NOT NULL,
 	role varchar(50) NOT NULL,
+	
 	CONSTRAINT PK_users PRIMARY KEY (user_id),
 	CONSTRAINT FK_users_trainer FOREIGN KEY (trainer_id) REFERENCES trainer (trainer_id)
 );
@@ -45,6 +46,7 @@ CREATE TABLE exercise (
 	
 
 );
+
 
 CREATE TABLE workout_user_data (
 	workout_user_data_id SERIAL,
