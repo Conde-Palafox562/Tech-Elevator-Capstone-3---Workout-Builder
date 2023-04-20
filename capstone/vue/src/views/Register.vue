@@ -1,4 +1,5 @@
 <template>
+
   <div id="register" class="text-center">
     <form @submit.prevent="register">
       <h1>Create Account</h1>
@@ -17,9 +18,20 @@
         <label for="confirmPassword">Confirm Password</label>
         <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
       </div>
+      <div class="form-input-group">
+        <label> Role </label>
+        <select v-model="user.role">
+          <option value=user> User </option>
+          <option value=trainer> Trainer </option>
+
+
+        </select>
+
+        </div>
       <button type="submit">Create Account</button>
       <p><router-link :to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
     </form>
+    
   </div>
 </template>
 
@@ -79,6 +91,24 @@ export default {
 }
 label {
   margin-right: 0.5rem;
+}
+#register form {
+background: #fff;
+padding: 2rem;
+border-radius: 10px;
+box-shadow: 0px 0px 24px #5C5696;
+width: 360px;
+align-items: center;
+justify-content: center;
+
+}
+
+#register {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+min-height: 100vh;
 }
 
 

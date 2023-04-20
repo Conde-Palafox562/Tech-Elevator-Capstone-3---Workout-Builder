@@ -8,8 +8,6 @@ INSERT INTO exercise (exercise_name, exercise_description, suggested_weight, num
 VALUES ('Warm-Up', 'Begin your workout with a quick jog and stretch to warm-up and prepare your body for aerobic activities.'
 		, 0, 0, 5, 'Cardio');
 
-INSERT INTO exercise (exercise_name, exercise_description, suggested_weight, num_of_reps, exercise_duration, target_area)
-VALUES ('Pull-Up', 'Hang from a pull-up bar by your hands with your palms facing away from you, and lifting your entire body up with your arm and back muscles.', 150, 8, 5, 'Arms');
 
 INSERT INTO exercise (exercise_name, exercise_description, suggested_weight, num_of_reps, exercise_duration, target_area)
 VALUES ('Dumbbell Curl', 'Slowly curl the weight up by bending your elbow, keeping your elbow close to your body. Then slowly lower the weight to the starting position.', 30, 10, 5, 'Arms');
@@ -21,58 +19,24 @@ INSERT INTO exercise (exercise_name, exercise_description, suggested_weight, num
 VALUES ('Preacher Curl', 'A weightlifting exercise for the biceps in which a barbell is lifted by flexing the elbows, with the upper arms resting on an angled bench.', 60, 8, 5, 'Arms');
 
 
-
-
-INSERT INTO exercise (exercise_name, exercise_description, suggested_weight, num_of_reps, exercise_duration, target_area)
-VALUES ('Tricep Extension', 'Point your upper arm toward the ceiling, with your elbow bent to 90 degrees. Slowly straighten the elbow, moving the weight upward. Then slowly lower the weight to the starting position.', 20, 10, 5, 'Arms');
-
 INSERT INTO exercise (exercise_name, exercise_description, suggested_weight, num_of_reps, exercise_duration, target_area)
 VALUES ('Push-Ups', 'Keeping a prone position, with the hands palms down under the shoulders, the balls of the feet on the ground, and the back straight, pushes the body up and lets it down by an alternate straightening and bending of the arms.', 0, 10, 5, 'Arms');
 
-INSERT INTO exercise (exercise_name, exercise_description, suggested_weight, num_of_reps, exercise_duration, target_area)
-VALUES ('Skull Crushers', 'Performed by lying on your back on a flat bench and lifting dumbbells from behind your head to full extension above you.', 25, 8, 8, 'Arms');
-
-INSERT INTO exercise (exercise_name, exercise_description, suggested_weight, num_of_reps, exercise_duration, target_area)
-VALUES ('Tricep Dips', 'Performed on parallel bars at your gym or even on a playground. You hold your entire body weight up with your arms extended and feet hovering over the floor, ankles crossed.', 0, 10, 4, 'Arms');
-
-
-
-
-INSERT INTO exercise (exercise_name, exercise_description, suggested_weight, num_of_reps, exercise_duration, target_area)
-VALUES ('Bench Press', 'Lying down on a flat bench, press the barbell up and down at chest height. It works the pectoral muscles, shoulders, and arms.
-', 160, 10, 5, 'Arms');
 
 INSERT INTO exercise (exercise_name, exercise_description, suggested_weight, num_of_reps, exercise_duration, target_area)
 VALUES ('Bodyweight Dip', 'The bodyweight dip is a compound upper-body pressing exercise that strengthens the shoulders, chest, and triceps. Leaning forward targets the chest while an upright position targets the triceps.', 0, 15, 6, 'Arms');
-
-INSERT INTO exercise (exercise_name, exercise_description, suggested_weight, num_of_reps, exercise_duration, target_area)
-VALUES ('Dumbbell Bench Press', 'Lie back on a flat bench with a dumbbell in each hand. Hold the weights at shoulder-level. Then press the weights straight up.', 25, 12, 6, 'Arms');
-
-INSERT INTO exercise (exercise_name, exercise_description, suggested_weight, num_of_reps, exercise_duration, target_area)
-VALUES ('Cable Crossover', 'Stand between two facing cable stations with both pulleys set midway between the top and bottom of the station. Keep your elbows slightly bent, and step forward so there’s tension on the cables.
-Flex your pecs as you bring your hands together out in front of your chest. Alternate stretching and flexing after each set. ', 50, 10, 6, 'Arms');
-
-
 
 
 INSERT INTO exercise (exercise_name, exercise_description, suggested_weight, num_of_reps, exercise_duration, target_area)
 VALUES ('Lateral Raise', 'Grab weighted dumbbells and lift them away from your body, bring your arms into a T-pose. Slowly lower your arms back to your sides to complete one repetition.'
 		, 15, 8, 1, 'Arms');
-INSERT INTO exercise (exercise_name, exercise_description, suggested_weight, num_of_reps, exercise_duration, target_area)
-VALUES ('Handstand Push-Up', 'While in a handstand, slowly lower yourself until your head touches the ground, then push until you are back into the handstand position.'
-		, 0, 4, 1, 'Arms');
-		
-INSERT INTO exercise (exercise_name, exercise_description, suggested_weight, num_of_reps, exercise_duration, target_area)
-VALUES ('Military Press', 'Lift a barbell to shoulder height and then smoothly lift it overhead.'
-		, 45, 8, 1, 'Arms');
+
 		
 INSERT INTO exercise (exercise_name, exercise_description, suggested_weight, num_of_reps, exercise_duration, target_area)
 VALUES ('Dumbbell Front Raise', 'Grab a dumbbell in each arm and then raise your arms up in front of you.'
 		, 15, 8, 1, 'Arms');
 
-INSERT INTO exercise (exercise_name, exercise_description, suggested_weight, num_of_reps, exercise_duration, target_area)
-VALUES ('Push-Up', 'In a prone position, with the hands down under the shoulders, the balls of the feet on the ground, and the back straight.
-', 150, 20, 10, 'Arms');
+
 
 
 INSERT INTO exercise (exercise_name, exercise_description, suggested_weight, num_of_reps, exercise_duration, target_area) VALUES ('Russian Twist', 'Sit on the floor with your knees bent and feet flat on the ground, hold your hands together in front of your chest and rotate side to side to complete one rep. ', 0, 20, 5, 'Abs');

@@ -4,11 +4,13 @@ import com.techelevator.dao.ExerciseDao;
 import com.techelevator.model.Exercise;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+@PreAuthorize("isAuthenticated()")
 @CrossOrigin
 @RestController
 public class ExerciseController {
@@ -25,6 +27,8 @@ public class ExerciseController {
         return exerciseDao.getExerciseById(id);
     }
 
+
+    @PreAuthorize("hasRole('TRAINER')")
     @RequestMapping(path = "/exercise/add", method = RequestMethod.POST)
     public Exercise addNewExercise(@RequestBody Exercise exercise) {
         exerciseDao.createExercise(exercise);
