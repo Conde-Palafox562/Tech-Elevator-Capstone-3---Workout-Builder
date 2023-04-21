@@ -9,6 +9,7 @@ import Exercise from "../views/Exercise.vue";
 import Trainer from "../views/Trainer.vue";
 
 
+
 Vue.use(Router)
 
 /**

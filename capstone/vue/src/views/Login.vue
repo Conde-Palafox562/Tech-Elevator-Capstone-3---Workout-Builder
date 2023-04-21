@@ -79,6 +79,7 @@ body {
     background-size: 100% 100%;
     height: 100vh;
     width: 100vw; 
+    position: fixed;
     
 
 }
@@ -163,6 +164,8 @@ padding: 2rem;
 border-radius: 10px;
 box-shadow: 0px 0px 24px #5C5696;
 width: 360px;
+position: fixed;
+
 
 }
 

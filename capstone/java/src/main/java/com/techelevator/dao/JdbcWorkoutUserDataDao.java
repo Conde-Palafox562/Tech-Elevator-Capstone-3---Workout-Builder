@@ -49,19 +49,27 @@ public class JdbcWorkoutUserDataDao implements WorkoutUserDataDao {
 
 
     @Override
-    public WorkoutUserData createUserWorkoutData(int user_id, LocalDate workout_date, int exercise_id) {
+    public WorkoutUserData createUserWorkoutData(int user_id, LocalDate workout_date, Exercise exercise) {
         WorkoutUserData workoutData = new WorkoutUserData();
         workoutData.setUser_id(user_id);
-        workoutData.setExercise_id(exercise_id);
+        workoutData.setExercise_id(exercise.getExercise_id());
         workoutData.setWorkout_date(workout_date);
-        workoutData.setAbs_duration(0);
-        workoutData.setLegs_duration(0);
-        workoutData.setBack_duration(0);
-        workoutData.setCardio_duration(0);
+        if (exercise.getTarget_area().equals("Legs")) {
+            workoutData.setLegs_duration(exercise.getExercise_duration());
+        } else if (exercise.getTarget_area().equals("Arms")) {
+            workoutData.setArms_duration(exercise.getExercise_duration());
+            workoutData.setAbs_duration(exercise.getExercise_duration());
+        } else if (exercise.getTarget_area().equals("Abs")) {
+            workoutData.setAbs_duration(exercise.getExercise_duration());
+        } else if (exercise.getTarget_area().equals("Back")) {
+            workoutData.setBack_duration(exercise.getExercise_duration());
+        } else if (exercise.getTarget_area().equals("Cardio")) {
+            workoutData.setCardio_duration(exercise.getExercise_duration());
+        }
 
-
+/*
         String exercisesql = "SELECT * FROM exercise WHERE exercise_id = ?";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(exercisesql, exercise_id);
+        SqlRowSet results = jdbcTemplate.queryForRowSet(exercisesql, workoutData.getExercise_id());
         if (results.next()) {
             if(results.getString("target_area").equals("abs")) {
                 workoutData.setAbs_duration(results.getInt("exercise_duration"));
@@ -85,7 +93,7 @@ public class JdbcWorkoutUserDataDao implements WorkoutUserDataDao {
 
 
         }
-
+*/
         String sql = "insert into workout_user_data(user_id, exercise_id, workout_date, abs_duration, legs_duration, back_duration, cardio_duration, arms_duration) VALUES (?,?,?,?,?,?,?,?) RETURNING workout_user_data_id";
         Integer newId;
         try {
@@ -109,6 +117,9 @@ public class JdbcWorkoutUserDataDao implements WorkoutUserDataDao {
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, user_id);
         while (results.next()) {
            WorkoutUserData workoutUserData = mapRowToWorkoutData(results);
+           String sql2 = "SELECT exercise_name FROM exercise WHERE exercise_id =?";
+           String nameResult = jdbcTemplate.queryForObject(sql2,String.class,workoutUserData.getExercise_id());
+           workoutUserData.setExercise_name(nameResult);
            workoutData.add(workoutUserData);
         }
         return workoutData;

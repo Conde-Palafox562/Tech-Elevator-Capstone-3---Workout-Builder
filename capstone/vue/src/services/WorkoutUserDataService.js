@@ -4,12 +4,12 @@ export default {
     return axios.get(`/workoutData`);
   },
 
-  addNewWorkoutData(user, date, exercise) {
-    return axios.post(`/workoutData/add/${user}/${date}/${exercise}`, user, date, exercise);
+  addNewWorkoutData(exercise) {
+    return axios.post(`/workoutData/add/`, exercise);
   },
 
-  getWorkoutDataForUser(user) {
-    return axios.get(`/workoutData/${user}`, user);
+  getWorkoutDataForUser() {
+    return axios.get(`/workoutData/me`);
   }
   
 };

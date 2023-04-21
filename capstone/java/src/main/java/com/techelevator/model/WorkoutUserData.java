@@ -17,6 +17,14 @@ public class WorkoutUserData {
     private int back_duration;
     private int cardio_duration;
     private int arms_duration;
+    private String exercise_name;
+
+    public String getExercise_name() {
+        return exercise_name;
+    }
+public void setExercise_name(String exercise_name){
+        this.exercise_name = exercise_name;
+}
 
 
 
