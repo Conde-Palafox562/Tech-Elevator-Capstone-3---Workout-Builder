@@ -76,7 +76,7 @@ body {
     background-image: url('https://i.imgur.com/VJJZe6A.png');
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-size: contain;
+    background-size: 100% 100%;
     height: 100vh;
     width: 100vw; 
     
@@ -84,6 +84,7 @@ body {
 }
 
 #login {
+margin-left: center;
 display: flex;
 flex-direction: column;
 align-items: center;
@@ -151,7 +152,7 @@ outline: none;
 
 #login h1 {
 text-align: center;
-font-size: 2rem;
+font-size: 1.5rem;
 margin-bottom: 1rem;
 color: #6A679E;
 }
@@ -196,7 +197,3 @@ margin-top: 1rem;
 color: #4C489D;
 }
 </style>
-
-
-
-

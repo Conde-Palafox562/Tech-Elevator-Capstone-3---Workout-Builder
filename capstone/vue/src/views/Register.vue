@@ -1,70 +1,97 @@
 <template>
-
-  <div id="register" class="text-center">
-    <form @submit.prevent="register">
-      <h1>Create Account</h1>
-      <div role="alert" v-if="registrationErrors">
-        {{ registrationErrorMsg }}
-      </div>
-      <div class="form-input-group">
-        <label for="username">Username</label>
-        <input type="text" id="username" v-model="user.username" required autofocus />
-      </div>
-      <div class="form-input-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" v-model="user.password" required />
-      </div>
-      <div class="form-input-group">
-        <label for="confirmPassword">Confirm Password</label>
-        <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
-      </div>
-      <div class="form-input-group">
-        <label> Role </label>
-        <select v-model="user.role">
-          <option value=user> User </option>
-          <option value=trainer> Trainer </option>
-
-
-        </select>
-
+  <div
+    class="bg-image"
+    style="
+      background-image: url('https://i.imgur.com/O9ppbYH.png');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: 100% 100%;
+      height: 100vh;
+      width: 100vw;
+    "
+  >
+    <div id="register" class="text-center">
+      <form @submit.prevent="register">
+        <h1>Create Account</h1>
+        <div role="alert" v-if="registrationErrors">
+          {{ registrationErrorMsg }}
         </div>
-      <button type="submit">Create Account</button>
-      <p><router-link :to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
-    </form>
-    
+        <div class="form-input-group">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            v-model="user.username"
+            required
+            autofocus
+          />
+        </div>
+        <div class="form-input-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            v-model="user.password"
+            required
+          />
+        </div>
+        <div class="form-input-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            v-model="user.confirmPassword"
+            required
+          />
+        </div>
+        <div class="form-input-group">
+          <label> Role </label>
+          <select v-model="user.role">
+            <option value="user">User</option>
+            <option value="trainer">Trainer</option>
+          </select>
+        </div>
+        <button type="submit">Create Account</button>
+        <p>
+          <router-link :to="{ name: 'login' }"
+            >Already have an account? Log in.</router-link
+          >
+        </p>
+      </form>
+    </div>
   </div>
 </template>
 
 <script>
-import authService from '../services/AuthService';
+import authService from "../services/AuthService";
 
 export default {
-  name: 'register',
+  name: "register",
   data() {
     return {
       user: {
-        username: '',
-        password: '',
-        confirmPassword: '',
-        role: 'user',
+        username: "",
+        password: "",
+        confirmPassword: "",
+        role: "user",
       },
       registrationErrors: false,
-      registrationErrorMsg: 'There were problems registering this user.',
+      registrationErrorMsg: "There were problems registering this user.",
     };
   },
   methods: {
     register() {
       if (this.user.password != this.user.confirmPassword) {
         this.registrationErrors = true;
-        this.registrationErrorMsg = 'Password & Confirm Password do not match.';
+        this.registrationErrorMsg = "Password & Confirm Password do not match.";
       } else {
         authService
           .register(this.user)
           .then((response) => {
             if (response.status == 201) {
               this.$router.push({
-                path: '/login',
-                query: { registration: 'success' },
+                path: "/login",
+                query: { registration: "success" },
               });
             }
           })
@@ -72,14 +99,14 @@ export default {
             const response = error.response;
             this.registrationErrors = true;
             if (response.status === 400) {
-              this.registrationErrorMsg = 'Bad Request: Validation Errors';
+              this.registrationErrorMsg = "Bad Request: Validation Errors";
             }
           });
       }
     },
     clearErrors() {
       this.registrationErrors = false;
-      this.registrationErrorMsg = 'There were problems registering this user.';
+      this.registrationErrorMsg = "There were problems registering this user.";
     },
   },
 };
@@ -87,29 +114,36 @@ export default {
 
 <style scoped>
 .form-input-group {
+  display: flex;
+  flex-direction: column;
   margin-bottom: 1rem;
 }
 label {
   margin-right: 0.5rem;
 }
 #register form {
-background: #fff;
-padding: 2rem;
-border-radius: 10px;
-box-shadow: 0px 0px 24px #5C5696;
-width: 360px;
-align-items: center;
-justify-content: center;
-
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0px 0px 24px #5c5696;
+  width: 360px;
+  align-items: center;
+  justify-content: center;
 }
 
 #register {
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin-top: -20px;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
 }
 
-
+#register h1 {
+text-align: center;
+font-size: 1.5rem;
+margin-bottom: 1rem;
+color: #6A679E;
+}
 </style>
