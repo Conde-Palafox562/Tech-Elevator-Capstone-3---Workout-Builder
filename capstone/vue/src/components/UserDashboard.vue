@@ -11,6 +11,7 @@
 <script>
 import WorkoutUserDataService from "../services/WorkoutUserDataService.js";
 
+
 export default {
   created() {
     WorkoutUserDataService.allUserWorkoutData().then (
@@ -18,7 +19,7 @@ export default {
       this.workoutuserdataservices = response.data
     })
   },
-
+    
   data() {
     return {
       workoutuserdata: {

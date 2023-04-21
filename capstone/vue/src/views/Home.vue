@@ -15,6 +15,7 @@
       <div class="d-flex justify-content-center align-items-center h-100"></div>
     </div>
     <user-dashboard />
+   
   </div>
   <!-- Background image -->
 </template>
@@ -22,10 +23,12 @@
 <script>
 import UserDashboard from "../components/UserDashboard.vue";
 
+
 export default {
   name: "Home",
   components: {
     UserDashboard,
+    
   },
 };
 </script>
