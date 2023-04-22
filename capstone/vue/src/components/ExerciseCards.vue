@@ -25,6 +25,7 @@
 <script>
 import ExerciseService from "../services/ExerciseService.js";
 import WorkoutUserDataService from "../services/WorkoutUserDataService.js";
+
 export default {
   created() {
     ExerciseService.listExercises().then((response) => {
@@ -85,6 +86,7 @@ export default {
   background-size: 100% 100%;
   height: 100vh;
   width: 100vw;
+  overflow: auto;
 }
 
 .card-container {
