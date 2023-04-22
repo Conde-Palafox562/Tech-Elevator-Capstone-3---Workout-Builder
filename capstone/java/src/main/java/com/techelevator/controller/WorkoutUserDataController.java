@@ -16,34 +16,33 @@ import java.util.List;
 
 
 @CrossOrigin
-    @RestController
+@RestController
 @PreAuthorize("isAuthenticated()")
-    public class WorkoutUserDataController {
+public class WorkoutUserDataController {
 
-        @Autowired
-        WorkoutUserDataDao workoutUserDataDao;
+    @Autowired
+    WorkoutUserDataDao workoutUserDataDao;
 
-        @Autowired
-         UserDao userDao;
+    @Autowired
+    UserDao userDao;
 
-        @RequestMapping(path = "/workoutData", method = RequestMethod.GET)
-        public List<WorkoutUserData>  allUserWorkoutData() {
-            return workoutUserDataDao.allUserWorkoutData();
-        }
-
-        @RequestMapping(path = "/workoutData/add", method = RequestMethod.POST)
-        public WorkoutUserData addNewWorkoutData(@RequestBody Exercise exercise, Principal token) {
-           User user = userDao.findByUsername(token.getName());
-
-            return workoutUserDataDao.createUserWorkoutData(user.getId(), LocalDate.now(), exercise);
-        }
-
-        @RequestMapping(path = "/workoutData/me", method = RequestMethod.GET)
-        public List<WorkoutUserData> getWorkoutDataForUser(Principal token) {
-            User user = userDao.findByUsername(token.getName());
-            return workoutUserDataDao.getWorkoutDataForUser(user.getId());
-        }
-
+    @RequestMapping(path = "/workoutData", method = RequestMethod.GET)
+    public List<WorkoutUserData>  allUserWorkoutData() {
+        return workoutUserDataDao.allUserWorkoutData();
     }
 
+    @RequestMapping(path = "/workoutData/add", method = RequestMethod.POST)
+    public WorkoutUserData addNewWorkoutData(@RequestBody Exercise exercise, Principal token) {
+        User user = userDao.findByUsername(token.getName());
+
+        return workoutUserDataDao.createUserWorkoutData(user.getId(), LocalDate.now(), exercise);
+    }
+
+    @RequestMapping(path = "/workoutData/me", method = RequestMethod.GET)
+    public List<WorkoutUserData> getWorkoutDataForUser(Principal token) {
+        User user = userDao.findByUsername(token.getName());
+        return workoutUserDataDao.getWorkoutDataForUser(user.getId());
+    }
+
+}
 
