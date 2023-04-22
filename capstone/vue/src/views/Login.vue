@@ -79,6 +79,7 @@ body {
     background-size: 100% 100%;
     height: 100vh;
     width: 100vw; 
+    position:fixed;
     
 
 }
