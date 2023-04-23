@@ -26,7 +26,7 @@ export default {
 
 <style>
 .bg-image {
-  background-image: url('https://i.imgur.com/UgPKrYV.png');
+  background-image: url('https://i.imgur.com/fGYYTPZ.png');
       background-repeat: no-repeat;
       background-attachment: fixed;
       background-size: 100% 100%;

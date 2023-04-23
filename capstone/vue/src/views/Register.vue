@@ -112,7 +112,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .form-input-group {
   display: flex;
   flex-direction: column;
@@ -141,9 +141,9 @@ label {
 }
 
 #register h1 {
-text-align: center;
-font-size: 1.5rem;
-margin-bottom: 1rem;
-color: #6A679E;
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #6a679e;
 }
 </style>
