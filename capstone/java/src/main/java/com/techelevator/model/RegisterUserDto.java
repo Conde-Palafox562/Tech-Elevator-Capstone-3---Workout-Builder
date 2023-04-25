@@ -2,7 +2,7 @@ package com.techelevator.model;
 
 import javax.validation.constraints.NotEmpty;
 
-public class RegisterUserDTO {
+public class RegisterUserDto {
 
     @NotEmpty
     private String username;

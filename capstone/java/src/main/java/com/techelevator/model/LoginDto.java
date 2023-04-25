@@ -3,7 +3,7 @@ package com.techelevator.model;
 /**
  * DTO for storing a user's credentials.
  */
-public class LoginDTO {
+public class LoginDto {
 
     private String username;
     private String password;
@@ -26,7 +26,7 @@ public class LoginDTO {
 
     @Override
     public String toString() {
-        return "LoginDTO{" +
+        return "LoginDto{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 '}';
