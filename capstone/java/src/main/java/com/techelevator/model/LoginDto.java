@@ -33,4 +33,4 @@ public class LoginDTO {
    }
 }
 
-//TechReady
+//TechReady Graduates

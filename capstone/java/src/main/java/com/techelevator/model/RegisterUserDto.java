@@ -46,4 +46,4 @@ public class RegisterUserDTO {
     }
 }
 
-//TechReady
+//TechReady Graduates
