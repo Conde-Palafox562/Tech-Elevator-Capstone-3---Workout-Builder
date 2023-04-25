@@ -1,60 +1,87 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.ExerciseDao;
+import com.techelevator.dao.ExerciseStatusDao;
 import com.techelevator.model.Exercise;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
-@PreAuthorize("isAuthenticated()")
-@CrossOrigin
 @RestController
+@CrossOrigin
+@PreAuthorize("isAuthenticated()")
 public class ExerciseController {
-    @Autowired
-    ExerciseDao exerciseDao;
 
-    @RequestMapping(path = "/exercise", method = RequestMethod.GET)
-    public List<Exercise> listExercises() {
-        return exerciseDao.allExercises();
+    private ExerciseDao exerciseDao;
+    private ExerciseStatusDao exerciseStatusDao;
+
+    public ExerciseController(ExerciseDao exerciseDao, ExerciseStatusDao exerciseStatusDao) {
+        this.exerciseDao = exerciseDao;
+        this.exerciseStatusDao = exerciseStatusDao;
     }
 
-    @RequestMapping(path = "/exercise/{id}", method = RequestMethod.GET)
-    public Exercise getExerciseById(@PathVariable int id) {
+
+    @GetMapping("/exercise/all")
+    public List<Exercise> getAllExercises() {
+        List<Exercise> allExercises = exerciseDao.getAll();
+
+        return allExercises;
+    }
+
+    @GetMapping("/exercise/view/{id}")
+    public Exercise getExerciseById(@PathVariable Long id) {
         return exerciseDao.getExerciseById(id);
     }
 
-
-    @PreAuthorize("hasRole('TRAINER')")
-    @RequestMapping(path = "/exercise/add", method = RequestMethod.POST)
-    public Exercise addNewExercise(@RequestBody Exercise exercise) {
-        exerciseDao.createExercise(exercise);
-        return exercise;
+    @GetMapping("/exercise/view/{id}/status")
+    public List<Exercise> getExercisesByStatusId(@PathVariable int id) {
+        return exerciseDao.getExercisesByStatusId(id);
     }
 
-    @RequestMapping(path = "/exercise/edit/{id}", method = RequestMethod.PUT)
-    public Exercise updateExercise(@RequestBody Exercise exercise, @PathVariable int id) {
-        Exercise updatedExercise = exerciseDao.updateExercise(exercise, id);
-        if (updatedExercise == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No such id: " + id);
-        }
-        else {
-            return updatedExercise;
-        }
+    @GetMapping("/exercise/user/{id}")
+    public List<Exercise> getExercisesByUserId(@PathVariable Long id) {
+        return exerciseDao.getExercisesByUserId(id);
     }
 
-    @RequestMapping(path = "/exercise/delete/{id}", method = RequestMethod.DELETE)
-    public void deleteExercise(@PathVariable int id) {
-        Exercise exerciseToDelete = exerciseDao.getExerciseById(id);
-        if (exerciseToDelete == null) {
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "No such id: " + id);
-        }
-        else {
-            exerciseDao.deleteExercise(id);
-        }
+
+
+    @GetMapping("/exercise/group/{muscleGroup}")
+    public List<Exercise> getExerciseByMuscleGroup(@PathVariable String muscleGroup) {
+        List<Exercise> exerciseGroup = exerciseDao.findByMuscleGroup(muscleGroup);
+
+        return exerciseGroup;
+    }
+
+    @GetMapping("/exercise/{Id}")
+    public List<Exercise> getExerciseByWorkout(@PathVariable Long Id) {
+        List<Exercise> exerciseList = exerciseDao.findByWorkout(Id);
+
+        return exerciseList;
+    }
+
+    @PostMapping("/exercise")
+    public void createExercise(@RequestBody Exercise exercise) {
+        this.exerciseDao.create(exercise);
+    }
+
+    @PutMapping("/exercise/{id}")
+    public boolean updateExercise(@Valid @PathVariable Long id, @RequestBody Exercise changedExercise) {
+        return this.exerciseDao.updateExercise(id, changedExercise);
+    }
+
+    @DeleteMapping("exercise/{id}")
+    public void deleteExercise(@Valid @PathVariable Long id) {
+        this.exerciseDao.deleteExercise(id);
+    }
+
+    // Incorporating exercise status in this controller
+    @GetMapping("exercise/status")
+    public String getStatusById() {
+        return this.exerciseStatusDao.getStatus();
     }
 
 }

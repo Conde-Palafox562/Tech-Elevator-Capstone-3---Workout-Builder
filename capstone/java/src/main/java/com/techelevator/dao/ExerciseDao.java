@@ -6,13 +6,26 @@ import java.util.List;
 
 public interface ExerciseDao {
 
-    List<Exercise> allExercises();
+    List<Exercise> getAll();
 
-    Exercise getExerciseById(int exercise_id);
+    Exercise getExerciseById(Long exerciseId);
 
-    boolean createExercise(Exercise exercise);
+    List<Exercise> getExercisesByStatusId(int statusId);
 
-    Exercise updateExercise(Exercise exercise, int exercise_id);
+    List<Exercise> getExercisesByUserId(Long userId);
 
-    void deleteExercise(int exercise_id);
+    Exercise findByExerciseName(String name);
+
+    List<Exercise> findByMuscleGroup(String group);
+
+    List<Exercise> findByWorkout(Long workOutId);
+
+    Exercise create(Exercise exercise);
+
+    Long getIdByExerciseName(String name);
+
+    boolean deleteExercise(Long id);
+
+    boolean updateExercise(Long id, Exercise changedExercise);
+
 }

@@ -1,115 +1,165 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.Exercise;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.dao.DataAccessException;
+import com.techelevator.model.ExerciseNotFoundException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-
 @Component
 public class JdbcExerciseDao implements ExerciseDao {
 
     private JdbcTemplate jdbcTemplate;
 
-    public JdbcExerciseDao(JdbcTemplate jdbcTemplate){
+    public JdbcExerciseDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-
     @Override
-    public List<Exercise> allExercises() {
+    public List<Exercise> getAll() {
         List<Exercise> exercises = new ArrayList<>();
-        String sql = "SELECT * FROM exercise";
+        String sql = "select * from exercises ";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
-        while(results.next()) {
-            Exercise exercise = mapRowToExerciseList(results);
+        while (results.next()) {
+            Exercise exercise = mapRowToExercise(results);
             exercises.add(exercise);
-
         }
 
         return exercises;
-
-
     }
 
     @Override
-    public Exercise getExerciseById(int exercise_id) {
-        String sql = "SELECT * FROM exercise WHERE exercise_id = ?";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, exercise_id);
-        if(results.next()) {
-            return mapRowToExerciseList(results);
-
+    public Exercise getExerciseById(Long exerciseId) {
+        String sql = "SELECT * FROM exercises WHERE exercise_id = ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, exerciseId);
+        if (results.next()) {
+            return mapRowToExercise(results);
         } else {
-            return null;
+            throw new ExerciseNotFoundException("Exercise not found");
         }
-
     }
 
     @Override
-    public boolean createExercise(Exercise exercise) {
-        String sql = "insert into exercise(exercise_name, exercise_description, suggested_weight, num_of_reps, exercise_duration, target_area) VALUES (?,?,?,?,?,?) RETURNING exercise_id";
-        Integer newId;
-        try{
-            newId = jdbcTemplate.queryForObject(sql,
-                    Integer.class, exercise.getExercise_name(), exercise.getExercise_description(), exercise.getSuggested_weight(), exercise.getNum_of_reps(), exercise.getExercise_duration(), exercise.getTarget_area());
-            exercise.setExercise_id(newId);
-        }catch (DataAccessException e){
-            return false;
+    public List<Exercise> getExercisesByStatusId(int statusId) {
+        List<Exercise> exercises = new ArrayList<>();
+        String sql = "SELECT * FROM exercises WHERE exercise_status_id = ? ORDER BY exercise_id DESC";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, statusId);
+        while (results.next()) {
+            Exercise exercise = mapRowToExercise(results);
+            exercises.add(exercise);
         }
-        return true;
+        return exercises;
     }
 
     @Override
-    public Exercise updateExercise(Exercise exercise, int id) {
+    public List<Exercise> getExercisesByUserId(Long userId) {
+        List<Exercise> exercises = new ArrayList<>();
+        String sql = "SELECT * FROM exercises WHERE user_id = ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
+        while (results.next()) {
+            Exercise exercise = mapRowToExercise(results);
+            exercises.add(exercise);
+        }
+        return exercises;
+    }
+
+    @Override
+    public Exercise findByExerciseName(String name) throws ExerciseNotFoundException {
+        if (!StringUtils.hasText(name)) throw new IllegalArgumentException();
+
+        for (Exercise exercise : this.getAll()) {
+            if (exercise.getName().toLowerCase().equals(name.toLowerCase())) {
+                return exercise;
+            }
+        }
+        throw new ExerciseNotFoundException("Exercise " + name + " was not found.");
+    }
+
+    @Override
+    public List<Exercise> findByMuscleGroup(String group) {
+        List<Exercise> exercises = new ArrayList<>();
+        String sql = "SELECT * FROM exercises WHERE muscle_group = ?";
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, group);
+
+        while (results.next()) {
+            Exercise exercise = mapRowToExercise(results);
+            exercises.add(exercise);
+        }
+        return exercises;
+    }
+
+    @Override
+    public List<Exercise> findByWorkout(Long workoutId) {
+        List<Exercise> exercises = new ArrayList<>();
+        String sql = "SELECT * " +
+        " FROM exercises " +
+                " Join workout_exercise ON workout_exercise.exercise_id = exercises.exercise_id" +
+                " Where workout_exercise.workout_id = ? ";
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, workoutId);
+        while (results.next()) {
+            Exercise exercise = mapRowToExercise(results);
+            exercises.add(exercise);
+        }
+
+        return exercises;
+    }
+
+    @Override
+    public Exercise create(Exercise exercise) {
+
+        String insertExercise = "INSERT INTO exercises (" +
+                " exercise_name, user_id, muscle_group, rep_range, exercise_type," +
+                "exercise_description, exercise_status_id, time_range) " +
+                "values (?, ?, ?, ?, ?, ?, ?, ?) RETURNING exercise_id";
+        Long exerciseId = jdbcTemplate.queryForObject(insertExercise, Long.class, exercise.getName(), exercise.getUserId(), exercise.getMuscleGroup(), exercise.getRepRange(), exercise.getType(), exercise.getDescription(), exercise.getStatusId(), exercise.getTimeRange());
+        return this.getExerciseById(exerciseId);
+    }
+
+    @Override
+    public Long getIdByExerciseName(String name) {
+        if (!StringUtils.hasText(name)) throw new IllegalArgumentException();
         try {
-            String sql = "UPDATE exercise SET exercise_name = ? WHERE exercise_id = ?";
-            jdbcTemplate.update(sql, exercise.getExercise_name(), id);
-            sql = "UPDATE exercise SET exercise_description = ? WHERE exercise_id = ?";
-            jdbcTemplate.update(sql, exercise.getExercise_description(), id);
-            sql = "UPDATE exercise SET suggested_weight = ? WHERE exercise_id = ?";
-            jdbcTemplate.update(sql, exercise.getSuggested_weight(), id);
-            sql = "UPDATE exercise SET num_of_reps = ? WHERE exercise_id = ?";
-            jdbcTemplate.update(sql, exercise.getNum_of_reps(), id);
-            sql = "UPDATE exercise SET duration = ? WHERE exercise_id = ?";
-            jdbcTemplate.update(sql, exercise.getExercise_duration(), id);
-            sql = "UPDATE exercise SET target_area = ? WHERE exercise_id = ?";
-            jdbcTemplate.update(sql, exercise.getTarget_area(), id);
-        } catch (DataAccessException e){
-            System.out.println("Failed to update exercise " + id + "!");
+            return jdbcTemplate.queryForObject("SELECT exercise_id FROM exercises WHERE exercise_name = ?", Long.class, name);
         }
-        return exercise;
+        catch (EmptyResultDataAccessException e) {
+            throw new ExerciseNotFoundException("Exercise " + name + " was not found.");
+        }
     }
 
     @Override
-    public void deleteExercise(int id) {
-        String sql = "DELETE FROM exercise WHERE exercise_id = ?";
-        try {
-            jdbcTemplate.update(sql, id);
-        } catch (DataAccessException e){
-            System.out.println("Failed to delete exercise " + id + "!");
-        }
+    public boolean deleteExercise(Long id) {
+        String sql = "DELETE FROM exercises WHERE exercise_id = ?";
+        return jdbcTemplate.update(sql, id) == 1;
     }
 
-    private Exercise mapRowToExerciseList(SqlRowSet rs) {
+    @Override
+    public boolean updateExercise(Long id, Exercise changedExercise) {
+        String sql = "UPDATE exercises SET exercise_name = ?, user_id = ?, exercise_description = ?, muscle_group = ?, " +
+                " rep_range = ?, exercise_type = ?, exercise_status_id = ?, time_range = ? " +
+                "WHERE exercise_id = ?";
+        return jdbcTemplate.update(sql, changedExercise.getName(), changedExercise.getUserId(), changedExercise.getDescription(), changedExercise.getMuscleGroup(),
+                changedExercise.getRepRange(), changedExercise.getType(), changedExercise.getStatusId(), changedExercise.getTimeRange(), id) == 1;
+    }
+
+    private Exercise mapRowToExercise(SqlRowSet rs) {
         Exercise exercise = new Exercise();
-        exercise.setExercise_id(rs.getInt("exercise_id"));
-        exercise.setExercise_name(rs.getString("exercise_name"));
-        exercise.setExercise_description(rs.getString("exercise_description"));
-        exercise.setSuggested_weight(rs.getInt("suggested_weight"));
-        exercise.setNum_of_reps(rs.getInt("num_of_reps"));
-        exercise.setExercise_duration(rs.getInt("exercise_duration"));
-        exercise.setTarget_area(rs.getString("target_area"));
+        exercise.setId(rs.getLong("exercise_id"));
+        exercise.setUserId(rs.getLong("user_id"));
+        exercise.setName(rs.getString("exercise_name"));
+        exercise.setDescription(rs.getString("exercise_description"));
+        exercise.setMuscleGroup(rs.getString("muscle_group"));
+        exercise.setRepRange(rs.getString("rep_range"));
+        exercise.setType(rs.getString("exercise_type"));
+        exercise.setStatusId(rs.getInt("exercise_status_id"));
+        exercise.setTimeRange(rs.getInt("time_range"));
 
         return exercise;
     }
-
-
-
-
 }

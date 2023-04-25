@@ -19,6 +19,7 @@
         <div class="form-input-group">
           <label for="username">Username</label>
           <input
+          class="inputBox"
             type="text"
             id="username"
             v-model="user.username"
@@ -29,6 +30,7 @@
         <div class="form-input-group">
           <label for="password">Password</label>
           <input
+          class="inputBox"
             type="password"
             id="password"
             v-model="user.password"
@@ -38,21 +40,25 @@
         <div class="form-input-group">
           <label for="confirmPassword">Confirm Password</label>
           <input
+          class="inputBox"
             type="password"
             id="confirmPassword"
             v-model="user.confirmPassword"
             required
           />
         </div>
-        <div class="form-input-group">
+        <div class="form-input-group" style="margin-bottom: 60px;">
           <label> Role </label>
-          <select v-model="user.role">
+          <select v-model="user.role" style="text-align: center; border-style: double;     -webkit-appearance: auto;">
             <option value="user">User</option>
             <option value="trainer">Trainer</option>
           </select>
         </div>
-        <button type="submit">Create Account</button>
-        <p>
+        <div style="text-align: center;">
+        <button type="submit" style="display: block;">Create Account</button>
+        </div>
+        
+        <p style="text-align: center; margin-top: 20px;">
           <router-link :to="{ name: 'login' }"
             >Already have an account? Log in.</router-link
           >
@@ -112,7 +118,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .form-input-group {
   display: flex;
   flex-direction: column;
@@ -121,6 +127,17 @@ export default {
 label {
   margin-right: 0.5rem;
 }
+.inputBox {
+  /* border: none; */
+  border-bottom: 2px solid #D1D1D4;
+  background: none;
+  padding: 10px;
+  padding-left: 24px;
+  font-weight: 700;
+  width: 100%;
+  transition: .2s;
+}
+
 #register form {
   background: #fff;
   padding: 2rem;
@@ -134,16 +151,16 @@ label {
 #register {
   display: flex;
   flex-direction: column;
-  margin-top: -20px;
+  /* padding-top: 60px; */
   align-items: center;
   justify-content: center;
   min-height: 100vh;
 }
 
 #register h1 {
-  text-align: center;
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: #6a679e;
+text-align: center;
+font-size: 1.5rem;
+margin-bottom: 1rem;
+color: #6A679E;
 }
 </style>

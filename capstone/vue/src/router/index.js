@@ -7,8 +7,11 @@ import Register from '../views/Register.vue'
 import store from '../store/index'
 import Exercise from "../views/Exercise.vue";
 import Trainer from "../views/Trainer.vue";
-import UserPage from "../views/UserPage.vue";
-
+import trainerPage from '../views/TrainerPage.vue'
+import userPage from '../views/UserPage.vue'
+import About from '../views/About.vue'
+import Faq from '../views/Faq.vue'
+import Contact from '../views/Contact.vue'
 
 
 Vue.use(Router)
@@ -76,15 +79,40 @@ const router = new Router({
       },
     },
     {
-      path: "/dashboard",
-      name: "dashboard",
-      component: UserPage,
+      path: "/user/:id",
+      name: "user",
+      component: userPage,
       meta: {
-        requiresAuth: true,
-      },
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/trainer/:id",
+      name: "trainer",
+      component:
+       trainerPage,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: About
+    },
+    {
+      path: '/faq',
+      name: 'faq',
+      component: Faq
+    },
+    {
+      path: '/contact',
+      name: 'contact',
+      component: Contact
     },
   ],
 });
+
 router.beforeEach((to, from, next) => {
   // Determine if the route requires Authentication
   const requiresAuth = to.matched.some(x => x.meta.requiresAuth);

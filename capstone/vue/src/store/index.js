@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 
+
 Vue.use(Vuex)
 
 /*
@@ -19,7 +20,35 @@ if(currentToken != null) {
 export default new Vuex.Store({
   state: {
     token: currentToken || '',
-    user: currentUser || {}
+
+    user: currentUser || {},
+
+    showEdit:false,
+
+    showAddWorkout:false,
+    
+    selectedExercise:{},
+
+    selectedWorkout:{},
+
+    recentWorkout:{},
+
+    workouts:[],
+
+    summaryWorkout: {
+      workoutId: 1,
+      name: "",
+      exercises: [],
+      focus: [],
+      trainer: "",
+      userId: "",
+      completed: false,
+    },
+
+    filter:"",
+
+    exercises: [],
+    
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -37,15 +66,88 @@ export default new Vuex.Store({
       state.token = '';
       state.user = {};
       axios.defaults.headers.common = {};
-    }
+    },
+
+    UPDATE_FILTER(state, filter){
+      state.filter = filter
+    },
+
+    ADD_EXERCISE(state, exercise){
+      state.exercises.push(exercise);
+    },
+
+    UPDATE_EXERCISE(state, updatedExercise){
+      state.exercises.forEach(exercise => {
+        if (exercise.id === updatedExercise.id) {
+          exercise = updatedExercise
+        }
+
+      });
+
+    },
+
+    DELETE_EXERCISE(state, id) {
+      let exercisesToKeep = [];
+      state.exercises.forEach(exercise => {
+        if (exercise.id !== id) {
+          exercisesToKeep.push(exercise);
+        }
+      });
+      state.exercises = exercisesToKeep;
+    },
+
+    DELETE_EXERCISE_FROM_WORKOUT(state, tempExercise) {
+      let exerciseToKeep = [];
+      console.log("state.workouts--", state.workouts, tempExercise.exerciseId, tempExercise.workoutId)
+      state.workouts.forEach(workout => {
+        if (workout.workoutId === tempExercise.workoutId) {
+          workout.exercises.forEach(exercise => {
+            if (exercise.id !== tempExercise.exerciseId) {
+              exerciseToKeep.push(exercise);
+            }
+          })
+          workout.exercises = exerciseToKeep;
+        }
+      });
+    },
+
+    SELECT_EXERCISE(state, exercise){
+      state.selectedExercise = exercise;
+    },
+
+    SELECT_WORKOUT(state, workout){
+      state.selectedWorkout = workout;
+    },
+
+    SET_RECENT(state, workout){
+      state.recentWorkout = workout;
+    },
     
+    ADD_WORKOUT(state, workout){
+      
+      let foundAt = state.workouts.findIndex( w => w.workoutId === workout.workoutId);
+      if(foundAt === -1){
+      state.workouts.unshift(workout);
+      }
 
+    },
 
+    UPDATE_WORKOUT(state, updatedWorkout){
+      state.workouts.forEach((workout) => {
+        if (workout.id === updatedWorkout.workoutId) {
+          workout = updatedWorkout;
+        }
+      })
 
-
-
-
-
-
+    },
+    DELETE_WORKOUT(state, id) {
+      let workoutsToKeep = [];
+      state.workouts.forEach(workout => {
+        if (workout.workoutId !== id) {
+          workoutsToKeep.push(workout);
+        }
+      });
+      state.workouts = workoutsToKeep;
+    },
   }
 })

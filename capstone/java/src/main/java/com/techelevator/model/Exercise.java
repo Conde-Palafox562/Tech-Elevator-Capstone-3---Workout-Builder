@@ -2,85 +2,117 @@ package com.techelevator.model;
 
 public class Exercise {
 
-    private int exercise_id;
-    private String exercise_name;
-    private String exercise_description;
-    private int exercise_duration;
-    private String target_area;
-    private int suggested_weight;
-    private int num_of_reps;
+    private Long id;
+    private Long userId;
+    private String name;
+    private String description;
+    private String muscleGroup;
+    private String repRange;
+    // Get clarification on type
+    private String type;
+    private int statusId;
+    private int timeRange;
 
     public Exercise() {
 
     }
 
-
-public Exercise(int exercise_id, String exercise_name, String exercise_description, int exercise_duration,
-String target_area, int suggested_weight, int num_of_reps) {
-
-    this.exercise_id = exercise_id;
-    this.exercise_name = exercise_name;
-    this.exercise_description = exercise_description;
-    this.exercise_duration = exercise_duration;
-    this.target_area = target_area;
-    this.suggested_weight = suggested_weight;
-    this.num_of_reps = num_of_reps;
-
-}
-
-    public int getExercise_id() {
-        return exercise_id;
+    public Exercise(Long id, Long userId, String name, String description,
+                    String muscleGroup, String repRange, String type, int statusId, int timeRange ) {
+        this.id = id;
+        this.userId = userId;
+        this.name = name;
+        this.description = description;
+        this.muscleGroup = muscleGroup;
+        this.repRange = repRange;
+        this.type = type;
+        this.statusId = statusId;
+        this.timeRange = timeRange;
     }
 
-    public void setExercise_id(int exercise_id) {
-        this.exercise_id = exercise_id;
+    public Long getId() {
+        return id;
     }
 
-    public String getExercise_name() {
-        return exercise_name;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setExercise_name(String exercise_name) {
-        this.exercise_name = exercise_name;
+    public Long getUserId() {
+        return userId;
     }
 
-    public String getExercise_description() {
-        return exercise_description;
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+    public String getName() {
+        return name;
     }
 
-    public void setExercise_description(String exercise_description) {
-        this.exercise_description = exercise_description;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public int getExercise_duration() {
-        return exercise_duration;
+    public String getDescription() {
+        return description;
     }
 
-    public void setExercise_duration(int exercise_duration) {
-        this.exercise_duration = exercise_duration;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getTarget_area() {
-        return target_area;
+    public String getMuscleGroup() {
+        return muscleGroup;
     }
 
-    public void setTarget_area(String target_area) {
-        this.target_area = target_area;
+    public void setMuscleGroup(String muscleGroup) {
+        this.muscleGroup = muscleGroup;
     }
 
-    public int getSuggested_weight() {
-        return suggested_weight;
+    public String getRepRange() {
+        return repRange;
     }
 
-    public void setSuggested_weight(int suggested_weight) {
-        this.suggested_weight = suggested_weight;
+    public void setRepRange(String repRange) {
+        this.repRange = repRange;
     }
 
-    public int getNum_of_reps() {
-        return num_of_reps;
+    public String getType() {
+        return type;
     }
 
-    public void setNum_of_reps(int num_of_reps) {
-        this.num_of_reps = num_of_reps;
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public int getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
+    }
+
+    public int getTimeRange() {
+        return timeRange;
+    }
+
+    public void setTimeRange(int timeRange) {
+        this.timeRange = timeRange;
+    }
+
+    @Override
+    public String toString() {
+        return "Exercise{" +
+                "id=" + id +
+                ", name=" + name +
+                ", userId=" + userId +
+                ", description=" + description +
+                ", muscleGroup=" + muscleGroup +
+                ", repRange=" + repRange +
+                ", type=" + type +
+                ", statusId=" + statusId +
+                ", timeRange=" + timeRange +
+                "}";
     }
 }

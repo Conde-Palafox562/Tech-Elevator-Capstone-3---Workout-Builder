@@ -1,14 +1,16 @@
 package com.techelevator.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.util.StringUtils;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 public class User {
 
-   private int id;
+   private Long id;
    private String username;
    @JsonIgnore
    private String password;
@@ -18,19 +20,19 @@ public class User {
 
    public User() { }
 
-   public User(int id, String username, String password, String authorities) {
+   public User(Long id, String username, String password, String authorities) {
       this.id = id;
       this.username = username;
       this.password = password;
-      if(authorities != null) this.setAuthorities(authorities);
       this.activated = true;
+      if (StringUtils.hasText(authorities)) this.setAuthorities(authorities);
    }
 
-   public int getId() {
+   public Long getId() {
       return id;
    }
 
-   public void setId(int id) {
+   public void setId(Long id) {
       this.id = id;
    }
 
@@ -65,6 +67,7 @@ public class User {
    public void setAuthorities(Set<Authority> authorities) {
       this.authorities = authorities;
    }
+
 
    public void setAuthorities(String authorities) {
       String[] roles = authorities.split(",");

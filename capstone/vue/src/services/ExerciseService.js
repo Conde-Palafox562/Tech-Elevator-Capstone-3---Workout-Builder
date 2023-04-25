@@ -1,22 +1,46 @@
-import axios from "axios";
+import axios from 'axios';
+
+
+
 export default {
-  listExercises() {
-    return axios.get(`/exercise`);
+
+  getExercises() {
+    return axios.get('/exercise/all')
   },
 
-  getExerciseById(id) {
-    return axios.get(`/exercise/${id}`);
+  getExerciseById(ID) {
+    return axios.get(`/exercise/view/${ID}`)
+  },
+  getExercisesByMuscleGroup(muscleGroup) {
+    return axios.get(`/exercise/group/${muscleGroup}`)
+  },
+  
+  getExercisesByWorkouts(id) {
+    return axios.get(`/exercise/${id}`)
   },
 
-  createExercise(exercise) {
-    return axios.post(`/exercise/add`, exercise);
+  addExercise(exercise) {
+    return axios.post('/exercise', exercise)
   },
 
-  updateExercise(exercise, id) {
-    return axios.put(`/exercise/edit/${id}`, exercise);
+  updateExercise(exercise){
+    return axios.put(`/exercise/${exercise.id}`, exercise)
   },
 
-  deleteExercise(id) {
-    return axios.delete(`/exercise/delete/${id}`);
+  deleteExercise(exercise){
+    return axios.delete(`/exercise/${exercise.id}`)
   },
-};
+
+  getStatus(statusID){
+    return axios.get(`/exercise/status/${statusID}`)
+  },
+
+  getExercisesByStatus(id){
+    console.log("id", id)
+    return axios.get(`/exercise/view/${id}/status`)
+  },
+
+  getExercisesByUser(id){
+    return axios.get(`/exercise/user/${id}`)
+  }
+}
