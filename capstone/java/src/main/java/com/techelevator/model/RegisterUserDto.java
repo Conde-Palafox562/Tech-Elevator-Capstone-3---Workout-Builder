@@ -45,5 +45,3 @@ public class RegisterUserDTO {
         this.role = role;
     }
 }
-
-//TechReady Graduates
