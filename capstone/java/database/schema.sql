@@ -90,7 +90,7 @@ INSERT INTO exercise_status (exercise_status_description) VALUES ('Pending');
 INSERT INTO exercise_status (exercise_status_description) VALUES ('Approved');
 INSERT INTO exercise_status (exercise_status_description) VALUES ('Rejected');
 
-INSERT INTO exercises (exercise_name,exercise_description,muscle_group,rep_range,exercise_type,exercise_status_id, time_range) -- exercise_approval queue is not currently included
+INSERT INTO exercises (exercise_name,exercise_description,muscle_group,rep_range,exercise_type,exercise_status_id, time_range)
 VALUES
 ('Stair Climbing', 'Find some stairs and climb up and down. Great for inside or outside!', 'Cardio', '10 min', 'Cardio', '2', '5'),
     ('Elliptical Trainer', 'An elliptical trainer or cross-trainer is a stationary exercise machine used to stair climb, walk, or run without causing excessive pressure to the joints, hence decreasing the risk of impact injuries.', 'Cardio', '5 min', 'Cardio', '2', '5'),
@@ -142,24 +142,5 @@ INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpUL
 
 INSERT INTO exercise_approval_queue (queue_desc) VALUES ('Request');
 INSERT INTO exercise_approval_queue (queue_desc) VALUES ('Send');
-
--- INSERT INTO workouts (workout_id, workout_name,trainer_id,user_id,completed)
--- VALUES
---     ('1','The Mike Levy', '3', '3', 'False'),
---     ('2','The Dave Hoy', '3', '3', 'False');
-
--- INSERT INTO workout_exercise ( workout_id, exercise_id)
--- VALUES
---     ('1','40'),
---     ('1','17'),
---     ('1','12'),
---     ('1','39'),
---     ('1','42'),
---     ('2','35'),
---     ('2', '38'),
---     ('2', '22'),
---     ('2', '1'),
---     ('2', '3');
-
 
 COMMIT TRANSACTION;
