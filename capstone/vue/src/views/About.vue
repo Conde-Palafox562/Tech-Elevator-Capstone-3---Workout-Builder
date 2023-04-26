@@ -23,7 +23,7 @@
           cols="12"
         >
           <v-card
-            :color="'#1F7087'"
+            :color="'#6A679E'"
             dark
           >
             <div class="d-flex flex-no-wrap justify-space-between">

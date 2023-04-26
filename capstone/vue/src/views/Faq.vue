@@ -7,7 +7,7 @@
           <!-- <v-container> -->
             <!-- <v-row>
               <v-col cols="12"> -->
-                <v-card :color="'#1F7087'" dark>
+                <v-card :color="'#6A679E'" dark>
                   <div class="d-flex flex-no-wrap justify-space-between">
                     <div>
                       <v-card-title class="text-h5" v-text="'FAQ - FitReady Workout Builder'"></v-card-title>
